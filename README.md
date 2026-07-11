@@ -30,9 +30,16 @@ Esta primera fase establece las bases de seguridad, persistencia de usuarios y m
 
 ## Capturas de Pantalla / Demostración Visual
 
-|               Interfaz de Login               | Perfil de Usuario |
-|:---------------------------------------------:| :---: |
-| ![Interfaz de Login](docs/interfaz_login.jpg) | [Pendiente - Fase 1.2] |
+|               Interfaz de Login                
+|:----------------------------------------------:
+| ![Interfaz de Login](docs/interfaz_login.jpg)  
+|             Interfaz de Dashboard              
+|    ![Interfaz de Login](docs/dashboard.jpg)    |               
+|               Interfaz de Logot                
+| ![Interfaz de Login](docs/logout_redirect.jpg) |                              
+
+ 
+
 
 ---
 
@@ -85,7 +92,7 @@ Esta primera fase establece las bases de seguridad, persistencia de usuarios y m
 
 ## Bitácora de Desarrollo (Build Log)
 
-Utilizo esta sección para documentar los desafíos técnicos superados y el progreso diario del proyecto.
+Utilizo esta sección para documentar el progreso diario del proyecto.
 
 ### 08/07/2026 - Inicialización y Core de Autenticación
 *   **Progreso:** Setup inicial de la arquitectura del proyecto en Django e implementación del flujo base de autenticación con la vista de Login.
@@ -93,4 +100,12 @@ Utilizo esta sección para documentar los desafíos técnicos superados y el pro
     *   Configuración del entorno virtual y dependencias base.
     *   Habilitación de la aplicación de autenticación en los ajustes de Django.
     *   Creación de la ruta y plantilla inicial para el formulario de inicio de sesión.
+
+### 10/07/2026 - Control de Sesiones, Dashboard y Flujos de Contraseña
+*   **Progreso:** Implementación completa del ciclo de autenticación base (Login/Logout), panel privado de usuario y maquetación inicial de los flujos de seguridad de credenciales.
+*   **Tareas completadas:**
+    *   Configuración de las vistas de inicio y cierre de sesión utilizando el sistema nativo de Django.
+    *   Desarrollo de la vista y plantilla del Dashboard para usuarios autenticados.
+    *   Ajustes en `settings.py` para definir las redirecciones automáticas globales (`LOGIN_REDIRECT_URL`, `LOGIN_URL` y `LOGOUT_URL`).
+    *   Estructuración parcial de las plantillas para el cambio de contraseña y su respectiva confirmación de éxito.
 
