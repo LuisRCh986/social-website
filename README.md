@@ -20,8 +20,10 @@ El desarrollo de este ecosistema se ha planificado en fases incrementales:
 Esta primera fase establece las bases de seguridad, persistencia de usuarios y manejo de archivos multimedia del proyecto.
 
 ### Funcionalidades Implementadas
-- **Autenticación Base:** Integración del marco nativo de autenticación de Django para la verificación segura de identidades.
-- **Formulario de Acceso:** Creación y configuración de la vista de inicio de sesión (Login) para la validación de credenciales de usuario.
+### Funcionalidades Implementadas
+- **Autenticación Base:** Integración del marco nativo de autenticación de Django para la verificación segura de identidades (Login, Logout y Dashboard privado).
+- **Seguridad de Cuentas:** Flujos completos y funcionales para el cambio de contraseñas de usuarios activos y el restablecimiento de credenciales olvidadas mediante la generación de tokens seguros basados en tiempo (`uidb64` / `token`) enviados por correo electrónico.
+
 
 ### Decisiones de Arquitectura
 *   **Vistas de Autenticación:** Utilización de las herramientas nativas de Django para el manejo seguro de sesiones HTTP, previniendo vulnerabilidades comunes de autenticación mediante el uso de formularios protegidos con tokens CSRF.
@@ -30,13 +32,17 @@ Esta primera fase establece las bases de seguridad, persistencia de usuarios y m
 
 ## Capturas de Pantalla / Demostración Visual
 
-|               Interfaz de Login                
-|:----------------------------------------------:
-| ![Interfaz de Login](docs/interfaz_login.jpg)  
-|             Interfaz de Dashboard              
-|    ![Interfaz de Login](docs/dashboard.jpg)    |               
-|               Interfaz de Logot                
-| ![Interfaz de Login](docs/logout_redirect.jpg) |                              
+|                  Interfaz de Login                  
+|:---------------------------------------------------:
+|    ![Interfaz de Login](docs/interfaz_login.jpg)    
+|                Interfaz de Dashboard                
+|      ![Interfaz de Login](docs/dashboard.jpg)       |               
+|                  Interfaz de Logot                  
+|   ![Interfaz de Login](docs/logout_redirect.jpg)    |
+|         Interfaz de Reestablecer Contraseña         
+|    ![Interfaz de Login](docs/password_reset.jpg)    |
+| Interfaz de Formulario para Reestablecer Contraseña 
+| ![Interfaz de Login](docs/password_reset_form.jpg)  |
 
  
 
@@ -108,4 +114,12 @@ Utilizo esta sección para documentar el progreso diario del proyecto.
     *   Desarrollo de la vista y plantilla del Dashboard para usuarios autenticados.
     *   Ajustes en `settings.py` para definir las redirecciones automáticas globales (`LOGIN_REDIRECT_URL`, `LOGIN_URL` y `LOGOUT_URL`).
     *   Estructuración parcial de las plantillas para el cambio de contraseña y su respectiva confirmación de éxito.
+
+### 12/07/2026 - Flujo Completo de Contraseñas y Optimizacion de Rutas
+*   **Progreso:** Finalización del sistema de seguridad de cuentas mediante la implementación de las plantillas y rutas para el cambio y restablecimiento de contraseñas.
+*   **Tareas completadas:**
+    *   Diseño y maquetación de la suite completa de plantillas requeridas por el sistema de autenticación de Django (`password_change`, `password_reset`, `password_reset_email`, etc.).
+    *   Mapeo inicial detallado de los seis endpoints individuales de seguridad en el archivo `urls.py`.
+    *   Refactorización y optimización del enrutamiento centralizando los flujos bajo la directiva nativa `path('', include('django.contrib.auth.urls'))`.
+*   **Decisión de Arquitectura:** Tras verificar el comportamiento individual de cada vista de autenticación, se optó por utilizar el enrutador unificado de Django. Esto reduce las líneas de código redundantes, mitiga errores de configuración manual en las expresiones de las URLs y garantiza la compatibilidad directa con los nombres de las plantillas estándar del framework.
 
