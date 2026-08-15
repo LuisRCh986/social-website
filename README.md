@@ -8,8 +8,8 @@ SocialImage es una red social moderna centrada en la curación y el descubrimien
 
 El desarrollo de este ecosistema se ha planificado en fases incrementales:
 
-- [🔄] **Fase 1: Sistema de Autenticación y Gestión de Perfiles** (En desarrollo)
-- [ ] **Fase 2:** Autenticación Social (OAuth2 con Google) e Integración Frontend.
+- [✔️] **Fase 1: Sistema de Autenticación y Gestión de Perfiles** (En desarrollo)
+- [✔️] **Fase 2:** Autenticación Social (OAuth2 con Google) e Integración Frontend.
 - [ ] **Fase 3:** Motor de Marcadores (Bookmarklet) para capturar imágenes externas vía JavaScript.
 - [ ] **Fase 4:** Flujo de Actividad Dinámico (Activity Stream) y Sistema de Seguimiento (Following).
 
@@ -23,14 +23,24 @@ Esta primera fase establece las bases de seguridad, persistencia de usuarios y m
 - **Autenticación Base:** Integración del marco nativo de autenticación de Django para la verificación segura de identidades (Login, Logout y Dashboard privado).
 - **Seguridad de Cuentas:** Flujos completos y funcionales para el cambio de contraseñas de usuarios activos y el restablecimiento de credenciales olvidadas mediante la generación de tokens seguros basados en tiempo (`uidb64` / `token`) enviados por correo electrónico.
 - **Perfiles Extendidos:** Ampliación del modelo `User` por defecto mediante una relación uno a uno (`OneToOneField`) con un modelo `Profile` personalizado para almacenar perfiles y datos adicionales.
-  - **Gestión de Identidad:** Implementación de formularios y vistas específicas para permitir a los usuarios editar la información de su perfil y actualizar sus credenciales desde el panel de control.
+- **Gestión de Identidad:** Implementación de formularios y vistas específicas para permitir a los usuarios editar la información de su perfil y actualizar sus credenciales desde el panel de control.
 
+## Fase 2: Autenticación Social (Google OAuth2) e Integración de Servicios
+
+Esta segunda fase expande las capacidades de acceso del ecosistema mediante la integración de proveedores externos de identidad, la optimización de flujos de validación y la securización del entorno local.
+
+### Funcionalidades Implementadas
+- **Autenticación Social (OAuth 2.0):** Integración con el proveedor de identidad de Google utilizando Python Social Auth, permitiendo un acceso rápido y seguro con un solo clic.
+- **Pipeline de Registro Automatizado:** Personalización del flujo de autenticación social para interceptar la respuesta de Google y automatizar la instanciación del modelo `Profile` para cada nuevo usuario social.
+- **Backend de Autenticación Dual:** Desarrollo de un backend personalizado a medida para flexibilizar el acceso local, habilitando el inicio de sesión mediante dirección de correo electrónico o nombre de usuario de forma indistinta.
+- **Validación Temprana de Cuentas:** Implementación de restricciones a nivel de formulario para mitigar la colisión de datos, previniendo de forma proactiva el registro de correos electrónicos ya existentes en la base de datos.
+- **Feedback en Tiempo Real:** Incorporación del framework de mensajes de Django para notificar dinámicamente al usuario el estado de sus acciones (alertas de éxito, errores o advertencias del sistema).
 
 ### Decisiones de Arquitectura
 *   **Vistas de Autenticación:** Utilización de las herramientas nativas de Django para el manejo seguro de sesiones HTTP, previniendo vulnerabilidades comunes de autenticación mediante el uso de formularios protegidos con tokens CSRF.
 ---
 
-## Capturas de Pantalla / Demostración Visual
+## Capturas de Pantalla
 
 |                               Interfaz de Login                               
 |:-----------------------------------------------------------------------------:
@@ -47,7 +57,17 @@ Esta primera fase establece las bases de seguridad, persistencia de usuarios y m
 |                  ![Interfaz de Login](docs/edit_profile.jpg)                  |
 | Interfaz de Dashboard con links hacia edición de perfil y cambio de contraseña 
 |                ![Interfaz de Login](docs/dashboard_update.jpg)                |
+### Interfaces de Autenticación y Flujo Social
 
+|              Control de Acceso y OAuth2               |                Mensajes de Feedback (UX)                |
+|:-----------------------------------------------------:|:-------------------------------------------------------:|
+| ![Inicio de Sesión con Google](docs/google_login.jpg) | ![Mensaje de Éxito de Django](docs/django_messages.jpg) |
+
+### Entorno de Desarrollo Seguro
+
+|                Servidor Local bajo HTTPS                |
+|:-------------------------------------------------------:|
+| ![Servidor con Certificado TLS](docs/https-browser.jpg) |
 
 
 ---
@@ -134,4 +154,11 @@ Utilizo esta sección para documentar el progreso diario del proyecto.
     *   Creación de la vista de edición y su correspondiente plantilla `edit.html`.
     *   Actualización del template del Dashboard para integrar dinámicamente los enlaces hacia los flujos de edición de perfil y cambio de contraseña.
    
-
+### 15/08/2026 - Autenticación por Email, Google OAuth2 y Entorno Seguro HTTPS
+*   **Progreso:** Implementación de un backend de autenticación personalizado, integración de inicio de sesión social con Google y securización del entorno de desarrollo local mediante certificados TLS.
+*   **Tareas completadas:**
+    *   Creación de un backend de autenticación a medida (`authentication.py`) para permitir el acceso mediante dirección de correo electrónico.
+    *   Configuración del Framework de Mensajes de Django para proporcionar retroalimentación en tiempo real al actualizar perfiles.
+    *   Implementación de validaciones robustas en formularios para mitigar la duplicidad de correos electrónicos en la base de datos.
+    *   Integración de Python Social Auth y personalización de su pipeline para automatizar la creación del modelo `Profile` en registros OAuth2.
+    *   Configuración de Django Extensions para ejecutar el servidor local bajo el protocolo seguro HTTPS empleando certificados SSL/TLS locales (`cert.crt`/`cert.key`).
