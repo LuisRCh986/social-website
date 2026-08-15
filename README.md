@@ -20,31 +20,34 @@ El desarrollo de este ecosistema se ha planificado en fases incrementales:
 Esta primera fase establece las bases de seguridad, persistencia de usuarios y manejo de archivos multimedia del proyecto.
 
 ### Funcionalidades Implementadas
-### Funcionalidades Implementadas
 - **Autenticación Base:** Integración del marco nativo de autenticación de Django para la verificación segura de identidades (Login, Logout y Dashboard privado).
 - **Seguridad de Cuentas:** Flujos completos y funcionales para el cambio de contraseñas de usuarios activos y el restablecimiento de credenciales olvidadas mediante la generación de tokens seguros basados en tiempo (`uidb64` / `token`) enviados por correo electrónico.
+- **Perfiles Extendidos:** Ampliación del modelo `User` por defecto mediante una relación uno a uno (`OneToOneField`) con un modelo `Profile` personalizado para almacenar perfiles y datos adicionales.
+  - **Gestión de Identidad:** Implementación de formularios y vistas específicas para permitir a los usuarios editar la información de su perfil y actualizar sus credenciales desde el panel de control.
 
 
 ### Decisiones de Arquitectura
 *   **Vistas de Autenticación:** Utilización de las herramientas nativas de Django para el manejo seguro de sesiones HTTP, previniendo vulnerabilidades comunes de autenticación mediante el uso de formularios protegidos con tokens CSRF.
-
 ---
 
 ## Capturas de Pantalla / Demostración Visual
 
-|                  Interfaz de Login                  
-|:---------------------------------------------------:
-|    ![Interfaz de Login](docs/interfaz_login.jpg)    
-|                Interfaz de Dashboard                
-|      ![Interfaz de Login](docs/dashboard.jpg)       |               
-|                  Interfaz de Logot                  
-|   ![Interfaz de Login](docs/logout_redirect.jpg)    |
-|         Interfaz de Reestablecer Contraseña         
-|    ![Interfaz de Login](docs/password_reset.jpg)    |
-| Interfaz de Formulario para Reestablecer Contraseña 
-| ![Interfaz de Login](docs/password_reset_form.jpg)  |
+|                               Interfaz de Login                               
+|:-----------------------------------------------------------------------------:
+|                 ![Interfaz de Login](docs/interfaz_login.jpg)                 
+|                             Interfaz de Dashboard                             
+|                   ![Interfaz de Login](docs/dashboard.jpg)                    |               
+|                               Interfaz de Logot                               
+|                ![Interfaz de Login](docs/logout_redirect.jpg)                 |
+|                      Interfaz de Reestablecer Contraseña                      
+|                 ![Interfaz de Login](docs/password_reset.jpg)                 |
+|              Interfaz de Formulario para Reestablecer Contraseña              
+|              ![Interfaz de Login](docs/password_reset_form.jpg)               |
+|                   Interfaz de Formulario para Editar Perfil                   
+|                  ![Interfaz de Login](docs/edit_profile.jpg)                  |
+| Interfaz de Dashboard con links hacia edición de perfil y cambio de contraseña 
+|                ![Interfaz de Login](docs/dashboard_update.jpg)                |
 
- 
 
 
 ---
@@ -122,4 +125,13 @@ Utilizo esta sección para documentar el progreso diario del proyecto.
     *   Mapeo inicial detallado de los seis endpoints individuales de seguridad en el archivo `urls.py`.
     *   Refactorización y optimización del enrutamiento centralizando los flujos bajo la directiva nativa `path('', include('django.contrib.auth.urls'))`.
 *   **Decisión de Arquitectura:** Tras verificar el comportamiento individual de cada vista de autenticación, se optó por utilizar el enrutador unificado de Django. Esto reduce las líneas de código redundantes, mitiga errores de configuración manual en las expresiones de las URLs y garantiza la compatibilidad directa con los nombres de las plantillas estándar del framework.
+
+### 15/08/2026 - Modelo de Perfil Personalizado e Interfaz de Edicion
+*   **Progreso:** Culminación de la Fase 1 mediante la creación del modelo de datos para perfiles de usuario, desarrollo de la lógica de edición de cuentas y actualización de la navegación del Dashboard.
+*   **Tareas completadas:**
+    *   Definición del modelo `Profile` en la base de datos conectado al modelo `User` nativo.
+    *   Desarrollo de formularios personalizados para la edición simultánea de los datos de usuario y perfil.
+    *   Creación de la vista de edición y su correspondiente plantilla `edit.html`.
+    *   Actualización del template del Dashboard para integrar dinámicamente los enlaces hacia los flujos de edición de perfil y cambio de contraseña.
+   
 
