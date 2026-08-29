@@ -10,7 +10,7 @@ El desarrollo de este ecosistema se ha planificado en fases incrementales:
 
 - [✔️] **Fase 1: Sistema de Autenticación y Gestión de Perfiles** (En desarrollo)
 - [✔️] **Fase 2:** Autenticación Social (OAuth2 con Google) e Integración Frontend.
-- [ ] **Fase 3:** Motor de Marcadores (Bookmarklet) para capturar imágenes externas vía JavaScript.
+- [🔄] **Fase 3:** Motor de Marcadores (Bookmarklet) para capturar imágenes externas vía JavaScript y Vistas AJAX (En desarrollo).
 - [ ] **Fase 4:** Flujo de Actividad Dinámico (Activity Stream) y Sistema de Seguimiento (Following).
 
 ---
@@ -35,6 +35,17 @@ Esta segunda fase expande las capacidades de acceso del ecosistema mediante la i
 - **Backend de Autenticación Dual:** Desarrollo de un backend personalizado a medida para flexibilizar el acceso local, habilitando el inicio de sesión mediante dirección de correo electrónico o nombre de usuario de forma indistinta.
 - **Validación Temprana de Cuentas:** Implementación de restricciones a nivel de formulario para mitigar la colisión de datos, previniendo de forma proactiva el registro de correos electrónicos ya existentes en la base de datos.
 - **Feedback en Tiempo Real:** Incorporación del framework de mensajes de Django para notificar dinámicamente al usuario el estado de sus acciones (alertas de éxito, errores o advertencias del sistema).
+
+## Fase 3: Motor de Marcadores (Bookmarklet) para capturar imágenes externas vía Javascript y Vistas AJAX
+
+Esta tercera fase expande la plataforma permitiendo la captura externa de contenido multimedia mediante inyección de scripts, optimizando el rendimiento frontend con peticiones asíncronas y automatizando el procesamiento de imágenes.
+
+### Funcionalidades Implementadas
+- **Relaciones Muchos a Muchos ($M:N$):** Modelado de datos avanzado para permitir que múltiples usuarios puedan interactuar o marcar una misma imagen en el sistema.
+- **Inyección de Scripts Remotos (Bookmarklet):** Desarrollo de una herramienta interactiva en JavaScript ejecutable desde la barra de marcadores del navegador para extraer imágenes del DOM de cualquier sitio web externo.
+- **Procesamiento de Miniaturas Automatizado:** Integración de la biblioteca `easy-thumbnails` para optimizar el almacenamiento y rendimiento, generando versiones a escala de las imágenes capturadas.
+- **Interacciones AJAX Asíncronas:** Implementación de vistas optimizadas que responden a peticiones asíncronas mediante la API nativa `Fetch` de JavaScript (por ejemplo, para acciones como dar "Me gusta").
+- **Desplazamiento Infinito (Infinite Scroll):** Diseño de una interfaz fluida en el frontend que carga dinánicamente la lista de las imágenes a medida que el usuario se desplaza hacia abajo, eliminnando la paginación tradicional.
 
 ### Decisiones de Arquitectura
 *   **Vistas de Autenticación:** Utilización de las herramientas nativas de Django para el manejo seguro de sesiones HTTP, previniendo vulnerabilidades comunes de autenticación mediante el uso de formularios protegidos con tokens CSRF.
@@ -162,3 +173,12 @@ Utilizo esta sección para documentar el progreso diario del proyecto.
     *   Implementación de validaciones robustas en formularios para mitigar la duplicidad de correos electrónicos en la base de datos.
     *   Integración de Python Social Auth y personalización de su pipeline para automatizar la creación del modelo `Profile` en registros OAuth2.
     *   Configuración de Django Extensions para ejecutar el servidor local bajo el protocolo seguro HTTPS empleando certificados SSL/TLS locales (`cert.crt`/`cert.key`).
+
+### 29/08/2026 - Bookmarklet, Easy-Thumbnails y Desplazamiento Infinito (Fetch API)
+*   **Progreso:** Culminación del motor de captura remota de imágenes, automatización de miniaturas y modernización de la lista de imágenes con carga asíncrona.
+*   **Tareas completadas:**
+    *   Creación de la aplicación `images` definiendo modelos de datos con relaciones `ManyToManyField` y formularios con comportamiento personalizado.
+    *   Desarrollo e integración del bookmarklet de JavaScript para la captura y envío remoto de imágenes hacia la plataforma.
+    *   Configuración del paquete `easy-thumbnails` para procesar y renderizar imágenes optimizadas en el frontend.
+    *   Implementación de lógica asíncrona con JavaScript (Fetch API) para interactuar con las vistas de Django sin recargar la página.
+    *   Construcción del sistema de paginación con desplazamiento infinito para la vista de lista de imágenes en el Dashboard.
