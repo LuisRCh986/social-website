@@ -93,40 +93,49 @@ Esta tercera fase expande la plataforma permitiendo la captura externa de conten
 ## Instalación y Configuración Local
 
 ### Prerrequisitos
-*   Python 3.11 o superior instalado.
+*   Python 3.14 o superior instalado.
 *   Gestor de entornos virtuales (venv).
 
 ### Pasos para Ejecutar
 1. **Clonar el repositorio:**
    ```bash
-   git clone https://github.com
-   cd socialimage
+   git clone https://github.com/LuisRCh986/social-website.git
+   Set-Location social-website
    ```
 
-2. **Crear y activar el entorno virtual:**
+2. **Crear el entorno virtual e instalar dependencias:**
    ```bash
-   python -m venv venv
-   # En Windows:
-   venv\Scripts\activate
-   # En macOS/Linux:
-   source venv/bin/activate
+   py -3.14 -m venv .venv-repro
+   .\.venv-repro\Scripts\python.exe -m pip install -r requirements.txt
    ```
-
-3. **Instalar dependencias:**
-   ```bash
-   pip install -r requirements.txt
-   ```
+3. **Crear la configuración local:**
+    ```bash
+    Copy-Item .env.example .env
+    .\.venv-example\Scripts\python.exe -c "import secrets; print(secrets.token_urlsafe(50))"
+    ```
+   
+    Copiar el valor general en ```DJANGO_SECRET_KEY=valor_generado``` 
 
 4. **Ejecutar migraciones iniciales:**
-   ```bash
-   python manage.py migrate
-   ```
+    ```bash
+    .\.venv-repro\Scripts\python.exe -m pip check
+    .\.venv-repro\Scripts\python.exe manage.py check
+    .\.venv-repro\Scripts\python.exe manage.py migrate    
+    ```
 
 5. **Iniciar el servidor de desarrollo:**
    ```bash
-   python manage.py runserver
+   .\.venv-repro\Scripts\python.exe manage.py runserver
    ```
-   Abre http://127.0.0.1:8000 en tu navegador.
+   Abre http://127.0.0.1:8000/account/login/ en tu navegador.
+
+Nota:
+
+    - Instalación validada con Python 3.14.
+    - Google OAuth requiere credenciales propias; el acceso local puede utilizarse sin configurarlo.
+    - Las migraciones propias se guardan en las aplicaciones del repositorio.
+    - No se deben modificar paquetes dentro de .venv o .venv-repro.
+    - .env, las bases locales y los respaldos no se suben a Git.
 
 ---
 
