@@ -21,10 +21,12 @@ class Image(models.Model):
         related_name='images_liked',
         blank=True,
     )
+    total_likes = models.PositiveIntegerField(default=0)
 
     class Meta:
         indexes = [
             models.Index(fields=['-created']),
+            models.Index(fields=['-total_likes']),
         ]
         ordering = ['-created']
 
@@ -37,4 +39,4 @@ class Image(models.Model):
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse('images:detail', kwargs={'slug': self.slug})
+        return reverse('images:detail', args=[self.id, self.slug])
