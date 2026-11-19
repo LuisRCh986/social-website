@@ -96,11 +96,24 @@ def user_list(request):
 
 @login_required
 def user_detail(request, username):
-    users = get_object_or_404(User, username=username, is_active=True)
+    target_user = get_object_or_404(
+        User,
+        username=username,
+        is_active=True,
+    )
+
+    followers = Contact.objects.filter(user_to=target_user)
     return render(
         request,
         'account/user/detail.html',
-        {'section': 'people', 'user': users}
+        {
+            'section': 'people',
+            'user': target_user,
+            'total_followers': followers.count(),
+            'is_following': followers.filter(
+                user_from=request.user,
+            ).exists(),
+         },
     )
 
 @require_POST
